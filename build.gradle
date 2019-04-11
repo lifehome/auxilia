@@ -18,6 +18,10 @@ repositories {
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    // Required for file compression
+    compile 'org.apache.commons:commons-compress:1.14'
+    compile 'org.tukaani:xz:1.6'
 }
 
 compileKotlin {
