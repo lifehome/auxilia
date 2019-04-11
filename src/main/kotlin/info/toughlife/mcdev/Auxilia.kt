@@ -1,12 +1,13 @@
 package info.toughlife.mcdev
 
-import info.toughlife.mcdev.core.AuxiliaUnsafe
+import info.toughlife.mcdev.core.io.config.ConfigFileHandler
+import info.toughlife.mcdev.core.io.config.ConfigReader
 import org.bukkit.plugin.java.JavaPlugin
-import java.util.logging.Logger
 
 class Auxilia : JavaPlugin() {
     companion object {
-        private lateinit var instance: Auxilia
+        lateinit var instance: Auxilia
+            private set
     }
 
     override fun onLoad() {
@@ -15,5 +16,7 @@ class Auxilia : JavaPlugin() {
 
     override fun onEnable() {
         logger.info("Loading resources...")
+        ConfigFileHandler.createFile()
+        ConfigReader.readConfig()
     }
 }
