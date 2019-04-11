@@ -15,6 +15,12 @@ repositories {
     }
 }
 
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
