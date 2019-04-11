@@ -7,7 +7,7 @@ import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile
 import java.io.File
 import java.io.FileInputStream
 
-class SevenZCompressor : FileCompressor<SevenZOutputFile>() {
+class SevenZCompressor : FileCompressor<SevenZOutputFile> {
     override fun addToArchive(output: SevenZOutputFile, file: File, dir: String) {
         val name = dir + File.separator + file.name
         if (file.isFile) {

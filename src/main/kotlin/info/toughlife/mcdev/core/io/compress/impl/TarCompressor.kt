@@ -12,7 +12,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.zip.Deflater
 
-class TarCompressor : FileCompressor<TarArchiveOutputStream>() {
+class TarCompressor : FileCompressor<TarArchiveOutputStream> {
     override fun addToArchive(output: TarArchiveOutputStream, file: File, dir: String) {
         val entry = dir + File.separator + file.name
         if (file.isFile) {
