@@ -1,0 +1,18 @@
+{
+  "version":1,
+  "settings":{
+    "maxQueuedJobs":3,
+    "compressArchive":true,
+    "deleteAfterUpload":false,
+    "cooldownMinutes":5
+  },
+  "compressionSettings":{
+    "method":"7z",
+    "compressionAlghoritm":"LZMA2"
+  },
+  "uploadSettings":{
+    "clientId":"",
+    "pathToChroot":"",
+    "clientSecret":""
+  }
+}

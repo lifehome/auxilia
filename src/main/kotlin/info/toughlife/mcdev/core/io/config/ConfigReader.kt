@@ -7,7 +7,7 @@ object ConfigReader {
 
     private val CONFIG = Auxilia.instance.config
 
-    private lateinit var configInfo: ConfigInfo
+    lateinit var configInfo: ConfigInfo
 
     internal fun readConfig() {
         val json = ConfigFileHandler.readFile()
@@ -18,4 +18,8 @@ object ConfigReader {
     internal fun getDefaults(): ConfigInfo {
         return ConfigInfo()
     }
+}
+
+fun configInfo(): ConfigInfo {
+    return ConfigReader.configInfo
 }

@@ -1,8 +1,6 @@
 package info.toughlife.mcdev.core.io.config
 
-import com.jsoniter.output.JsonStream
 import info.toughlife.mcdev.Auxilia
-import info.toughlife.mcdev.commons.prettyPrint
 import java.io.File
 import java.nio.charset.StandardCharsets
 
@@ -16,9 +14,8 @@ object ConfigFileHandler {
 
         if (!FILE.exists()) {
             FILE.createNewFile()
-
-            val default = ConfigReader.getDefaults()
-            FILE.writeText(JsonStream.serialize(default).prettyPrint())
+            FILE.writeText(this::class.java.classLoader
+                .getResource("config.json").readText())
         }
     }
 

@@ -2,6 +2,7 @@ package info.toughlife.mcdev
 
 import info.toughlife.mcdev.core.io.config.ConfigFileHandler
 import info.toughlife.mcdev.core.io.config.ConfigReader
+import info.toughlife.mcdev.core.io.config.configInfo
 import org.bukkit.plugin.java.JavaPlugin
 
 class Auxilia : JavaPlugin() {
@@ -18,5 +19,7 @@ class Auxilia : JavaPlugin() {
         logger.info("Loading resources...")
         ConfigFileHandler.createFile()
         ConfigReader.readConfig()
+
+        println(configInfo())
     }
 }
