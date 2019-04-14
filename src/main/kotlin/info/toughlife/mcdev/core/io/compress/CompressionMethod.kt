@@ -22,6 +22,7 @@ enum class CompressionMethod {
     DELTA_FILTER,
 
     // Tar compression methods
-    GZIP;
+    GZIP,
+    NONE;
 
 }
