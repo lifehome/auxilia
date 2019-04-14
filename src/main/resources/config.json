@@ -8,7 +8,7 @@
   },
   "compressionSettings":{
     "method":"7z",
-    "compressionAlghoritm":"LZMA2"
+    "alghoritm":"LZMA2"
   },
   "uploadSettings":{
     "clientId":"",

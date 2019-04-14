@@ -4,13 +4,20 @@ import java.util.*
 
 class AuxiliaQueueHandler {
 
-    private val queue = PriorityQueue<AuxiliaQueue>()
+    private val queue = LinkedList<AuxiliaQueue>()
+
+    var allowNext = true
 
     /**
      * Execute the next backup in a queue
      */
     fun next() {
-        val queue = this.queue.poll()
+        if (!allowNext)
+            return
+
+        val queue = this.queue.poll() ?: return
+
+        allowNext = false
 
         queue.start()
     }
@@ -24,6 +31,11 @@ class AuxiliaQueueHandler {
 
     fun addToQueue(queue: AuxiliaQueue) {
         this.queue.add(queue)
+        next()
+    }
+
+    fun size(): Int {
+        return queue.size
     }
 
 }

@@ -6,8 +6,7 @@ object AuxiliaManager {
 
     internal val queueHandler = AuxiliaQueueHandler()
 
-    fun backup(world: World) {
-        AuxiliaQueue(world).finalize()
+    fun backup(world: World, player: String) {
+        AuxiliaQueue(world, player).finalize()
     }
-
 }

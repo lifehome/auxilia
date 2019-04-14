@@ -2,11 +2,13 @@ package info.toughlife.mcdev.core
 
 import org.bukkit.World
 
-class AuxiliaQueue(private val world: World)
-    : Thread("AuxiliaBackupQueue") {
+class AuxiliaQueue(private val world: World, private val player: String)
+    : Thread("AuxiliaBackupThread") {
 
     override fun run() {
-        AuxiliaUnsafe.backupUnsafe(this.world)
+        AuxiliaUnsafe.backupUnsafe(this.world, this.player)
+        AuxiliaManager.queueHandler.allowNext = true
+        AuxiliaManager.queueHandler.next()
     }
 
     fun finalize(): AuxiliaQueue {

@@ -3,6 +3,7 @@ package info.toughlife.mcdev.core
 import info.toughlife.mcdev.Auxilia
 import info.toughlife.mcdev.core.io.FileCompressionManager
 import info.toughlife.mcdev.core.io.FileFetcher
+import info.toughlife.mcdev.core.io.FileNameCreator
 import org.bukkit.World
 
 /**
@@ -11,13 +12,13 @@ import org.bukkit.World
  */
 internal object AuxiliaUnsafe {
 
-    fun backupUnsafe(world: World) {
-        val time = System.currentTimeMillis()
-        val tempFolder = Auxilia.instance.dataFolder.absolutePath + "/temp_$time.7z"
+    fun backupUnsafe(world: World, player: String) {
+        val outputName = Auxilia.instance.dataFolder.absolutePath + "/" +
+                FileNameCreator.createBackupName(world.name, player)
 
         val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
 
-        FileCompressionManager.compress(tempFolder, worldFiles)
+        FileCompressionManager.compress(outputName, worldFiles)
     }
 
 }

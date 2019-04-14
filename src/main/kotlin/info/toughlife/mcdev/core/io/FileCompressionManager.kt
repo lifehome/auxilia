@@ -42,6 +42,19 @@ object FileCompressionManager {
         }
     }
 
+    fun getExtensionSyntax(): String {
+        return when (COMPRESSION_METHOD) {
+            "7z" -> ".7z"
+            "tar" -> {
+                if (COMPRESSION_ALGHORITM == CompressionAlghoritm.GZIP) {
+                    ".tar.gz"
+                }
+                else ".tar"
+            }
+            else -> ".err"
+        }
+    }
+
     private fun compress7z(output: String, map: Map<String, File>) {
         SEVENZ_COMPRESSOR.compress(output, COMPRESSION_ALGHORITM, map)
     }
