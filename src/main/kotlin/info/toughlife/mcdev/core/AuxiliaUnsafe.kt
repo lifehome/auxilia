@@ -4,6 +4,7 @@ import info.toughlife.mcdev.Auxilia
 import info.toughlife.mcdev.core.io.FileCompressionManager
 import info.toughlife.mcdev.core.io.FileFetcher
 import info.toughlife.mcdev.core.io.FileNameCreator
+import info.toughlife.mcdev.core.io.FileUploader
 import org.bukkit.World
 
 /**
@@ -19,6 +20,9 @@ internal object AuxiliaUnsafe {
         val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
 
         FileCompressionManager.compress(outputName, worldFiles)
+        val file = java.io.File(outputName)
+
+        FileUploader.upload(file)
     }
 
 }

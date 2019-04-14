@@ -34,6 +34,11 @@ class AuxiliaQueueHandler {
         next()
     }
 
+    fun addToQueuePriority(queue: AuxiliaQueue) {
+        this.queue.offerFirst(queue)
+        next()
+    }
+
     fun size(): Int {
         return queue.size
     }

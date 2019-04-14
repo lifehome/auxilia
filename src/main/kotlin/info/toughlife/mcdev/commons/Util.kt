@@ -4,6 +4,9 @@ import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
+const val CONSOLE_MODIFIER = "~~!CONSOLE!~~"
+const val CONSOLE_REPLACEMENT = "CONSOLE"
+
 fun String.colored(): String {
     return ChatColor.translateAlternateColorCodes('&', this)
 }

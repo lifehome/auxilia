@@ -15,4 +15,9 @@ class AuxiliaQueue(private val world: World, private val player: String)
         AuxiliaManager.queueHandler.addToQueue(this)
         return this
     }
+
+    fun finalizePriority(): AuxiliaQueue {
+        AuxiliaManager.queueHandler.addToQueuePriority(this)
+        return this
+    }
 }

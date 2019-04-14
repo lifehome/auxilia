@@ -9,10 +9,5 @@
   "compressionSettings":{
     "method":"7z",
     "alghoritm":"LZMA2"
-  },
-  "uploadSettings":{
-    "clientId":"",
-    "pathToChroot":"",
-    "clientSecret":""
   }
 }

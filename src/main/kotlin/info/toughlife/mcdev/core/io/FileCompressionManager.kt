@@ -55,6 +55,19 @@ object FileCompressionManager {
         }
     }
 
+    fun getMimeType(): String {
+        return when (COMPRESSION_METHOD) {
+            "7z" -> "application/x-7z-compressed"
+            "tar" -> {
+                if (COMPRESSION_ALGHORITM == CompressionAlghoritm.GZIP) {
+                    "application/tar+gzip"
+                }
+                else "application/tar"
+            }
+            else -> "error"
+        }
+    }
+
     private fun compress7z(output: String, map: Map<String, File>) {
         SEVENZ_COMPRESSOR.compress(output, COMPRESSION_ALGHORITM, map)
     }
