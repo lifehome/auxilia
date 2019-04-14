@@ -1,7 +1,9 @@
 package info.toughlife.mcdev.core
 
+import info.toughlife.mcdev.Auxilia
+import info.toughlife.mcdev.core.io.FileCompressionManager
+import info.toughlife.mcdev.core.io.FileFetcher
 import org.bukkit.World
-import java.io.File
 
 /**
  * A class that holds all functions that can be used ONLY in certain circumstances
@@ -11,27 +13,11 @@ internal object AuxiliaUnsafe {
 
     fun backupUnsafe(world: World) {
         val time = System.currentTimeMillis()
+        val tempFolder = Auxilia.instance.dataFolder.absolutePath + "/temp_$time.7z"
 
-        // get files
-        // compress files
-        // upload files
-        // profit?
-    }
+        val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
 
-    fun getWorldFiles(world: World): List<File> {
-        return listOf()
-    }
-
-    fun getRegionFiles(world: World): List<File> {
-        return listOf()
-    }
-
-    fun compressUnsafe(file: File): File? {
-        return null
-    }
-
-    fun uploadUnsafe(file: File) {
-
+        FileCompressionManager.compress(tempFolder, worldFiles)
     }
 
 }

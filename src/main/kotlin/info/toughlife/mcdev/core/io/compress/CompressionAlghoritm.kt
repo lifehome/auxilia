@@ -1,12 +1,12 @@
 package info.toughlife.mcdev.core.io.compress
 
 /**
- * General compression method list
+ * General compression alghoritm list
  * warning - GZIP does not work with 7zip compression methods and vice versa
  */
-enum class CompressionMethod {
+enum class CompressionAlghoritm {
 
-    // 7Zip compression methods
+    // 7Zip compression alghoritms
     COPY,
     LZMA,
     LZMA2,
@@ -21,7 +21,7 @@ enum class CompressionMethod {
     BCJ_SPARC_FILTER,
     DELTA_FILTER,
 
-    // Tar compression methods
+    // Tar compression alghoritms
     GZIP,
     NONE;
 

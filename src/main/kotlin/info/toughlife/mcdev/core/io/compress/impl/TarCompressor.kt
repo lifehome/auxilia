@@ -1,6 +1,6 @@
 package info.toughlife.mcdev.core.io.compress.impl
 
-import info.toughlife.mcdev.core.io.compress.CompressionMethod
+import info.toughlife.mcdev.core.io.compress.CompressionAlghoritm
 import info.toughlife.mcdev.core.io.compress.FileCompressor
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream
@@ -14,26 +14,25 @@ import java.util.zip.Deflater
 
 class TarCompressor : FileCompressor<TarArchiveOutputStream> {
     override fun addToArchive(output: TarArchiveOutputStream, file: File, dir: String) {
-        val entry = dir + File.separator + file.name
         if (file.isFile) {
-            output.putArchiveEntry(TarArchiveEntry(file, entry))
+            output.putArchiveEntry(TarArchiveEntry(file, dir))
             FileInputStream(file).use { input -> IOUtils.copy(input, output) }
             output.closeArchiveEntry()
         } else if (file.isDirectory) {
             val children = file.listFiles()
             if (children != null) {
                 for (child in children) {
-                    addToArchive(output, child, entry)
+                    addToArchive(output, child, dir)
                 }
             }
         }
     }
 
-    override fun compress(output: String, method: CompressionMethod, vararg files: File) {
+    override fun compress(output: String, alghoritm: CompressionAlghoritm, map: Map<String, File>) {
         val parameters = GzipParameters()
         parameters.compressionLevel = Deflater.BEST_COMPRESSION
 
-        val outputStream = if (method == CompressionMethod.GZIP) {
+        val outputStream = if (alghoritm == CompressionAlghoritm.GZIP) {
             GzipCompressorOutputStream(FileOutputStream(output), parameters)
         } else FileOutputStream(output)
 
@@ -43,8 +42,8 @@ class TarCompressor : FileCompressor<TarArchiveOutputStream> {
         taos.setAddPaxHeadersForNonAsciiNames(true)
 
         taos.use { out ->
-            for (file in files) {
-                addToArchive(out, file, ".")
+            for ((localPath, file) in map) {
+                addToArchive(out, file, localPath)
             }
         }
     }

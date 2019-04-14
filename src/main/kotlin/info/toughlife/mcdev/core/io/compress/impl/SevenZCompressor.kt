@@ -1,6 +1,6 @@
 package info.toughlife.mcdev.core.io.compress.impl
 
-import info.toughlife.mcdev.core.io.compress.CompressionMethod
+import info.toughlife.mcdev.core.io.compress.CompressionAlghoritm
 import info.toughlife.mcdev.core.io.compress.FileCompressor
 import org.apache.commons.compress.archivers.sevenz.SevenZMethod
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile
@@ -9,9 +9,8 @@ import java.io.FileInputStream
 
 class SevenZCompressor : FileCompressor<SevenZOutputFile> {
     override fun addToArchive(output: SevenZOutputFile, file: File, dir: String) {
-        val name = dir + File.separator + file.name
         if (file.isFile) {
-            val entry = output.createArchiveEntry(file, name)
+            val entry = output.createArchiveEntry(file, dir)
             output.putArchiveEntry(entry)
 
             val inputStream = FileInputStream(file)
@@ -27,17 +26,17 @@ class SevenZCompressor : FileCompressor<SevenZOutputFile> {
             val children = file.listFiles()
             if (children != null) {
                 for (child in children) {
-                    addToArchive(output, child, name)
+                    addToArchive(output, child, dir)
                 }
             }
         }
     }
 
-    override fun compress(output: String, method: CompressionMethod, vararg files: File) {
+    override fun compress(output: String, alghoritm: CompressionAlghoritm, map: Map<String, File>) {
         SevenZOutputFile(File(output)).use { out ->
             out.setContentCompression(SevenZMethod.LZMA2)
-            for (file in files) {
-                addToArchive(out, file, ".")
+            for ((localPath, file) in map) {
+                addToArchive(out, file, localPath)
             }
         }
     }
