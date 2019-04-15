@@ -41,8 +41,8 @@ dependencies {
     compile 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
 
     // For schematic extraction
-    compile 'com.sk89q.worldedit:worldedit-bukkit:6.1.1-SNAPSHOT'
-    compile 'com.sk89q.worldguard:worldguard-core:6.1.1-SNAPSHOT'
+    compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.0.0-SNAPSHOT'
+    compileOnly 'com.sk89q.worldguard:worldguard-legacy:7.0.0-SNAPSHOT'
 }
 
 compileKotlin {

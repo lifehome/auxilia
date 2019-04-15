@@ -40,6 +40,9 @@ internal object AuxiliaUnsafe {
         DriveManager.upload(file)
 
         queue.currentAction = AuxiliaQueueAction.CLEANUP
+        for ((_, schema) in schematics) {
+            schema.delete()
+        }
         file.delete()
     }
 
