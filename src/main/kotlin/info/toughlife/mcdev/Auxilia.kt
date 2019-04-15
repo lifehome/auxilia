@@ -1,7 +1,8 @@
 package info.toughlife.mcdev
 
 import com.google.api.services.drive.Drive
-import info.toughlife.mcdev.core.AuxiliaManager
+import info.toughlife.mcdev.core.command.AuxiliaCommand
+import info.toughlife.mcdev.core.io.DriveManager
 import info.toughlife.mcdev.core.io.config.ConfigFileHandler
 import info.toughlife.mcdev.core.io.config.ConfigReader
 import info.toughlife.mcdev.core.io.config.configInfo
@@ -32,8 +33,12 @@ class Auxilia : JavaPlugin() {
             (configInfo().settings.cooldownMinutes * 60) * 20L,
             (configInfo().settings.cooldownMinutes * 60) * 20L)
 
+        getCommand("auxilia")!!.setExecutor(AuxiliaCommand)
+
         drive = GoogleDriveAPI.createService()
+
+        println(DriveManager.listFiles())
         // test
-        AuxiliaManager.backup(Bukkit.getWorld("world")!!, "1")
+        //AuxiliaManager.backup(Bukkit.getWorld("world")!!, "1")
     }
 }

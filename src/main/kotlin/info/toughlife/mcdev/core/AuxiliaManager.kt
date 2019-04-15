@@ -2,6 +2,7 @@ package info.toughlife.mcdev.core
 
 import info.toughlife.mcdev.commons.CONSOLE_MODIFIER
 import info.toughlife.mcdev.commons.CONSOLE_REPLACEMENT
+import org.bukkit.Bukkit
 import org.bukkit.World
 
 object AuxiliaManager {
@@ -15,5 +16,11 @@ object AuxiliaManager {
         }
 
         AuxiliaQueue(world, player).finalize()
+    }
+
+    fun backupAll(player: String) {
+        for (world in Bukkit.getWorlds()) {
+            backup(world, player)
+        }
     }
 }

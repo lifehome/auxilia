@@ -2,11 +2,17 @@ package info.toughlife.mcdev.core
 
 import org.bukkit.World
 
-class AuxiliaQueue(private val world: World, private val player: String)
+class AuxiliaQueue(val world: World, val player: String)
     : Thread("AuxiliaBackupThread") {
 
+    var currentAction = AuxiliaQueueAction.STARTING
+    var started: Long = 0
+    var fileName: String = ""
+
     override fun run() {
-        AuxiliaUnsafe.backupUnsafe(this.world, this.player)
+        started = System.currentTimeMillis()
+        AuxiliaUnsafe.backupUnsafe(this, this.world, this.player)
+        AuxiliaManager.queueHandler.current = null
         AuxiliaManager.queueHandler.allowNext = true
         AuxiliaManager.queueHandler.next()
     }

@@ -12,12 +12,12 @@ object FileCompressionManager {
     private val SEVENZ_COMPRESSOR = SevenZCompressor()
     private val TAR_COMPRESSOR = TarCompressor()
 
-    private var COMPRESSION_ALGHORITM : CompressionAlghoritm = try {
+    var COMPRESSION_ALGHORITM : CompressionAlghoritm = try {
         CompressionAlghoritm.valueOf(configInfo().compressionSettings.alghoritm)
     } catch (e: IllegalArgumentException) {
         CompressionAlghoritm.NONE
     }
-    private val COMPRESSION_METHOD = configInfo().compressionSettings.method
+    val COMPRESSION_METHOD = configInfo().compressionSettings.method
 
     init {
         Auxilia.instance.logger.info("Selected compression alghoritm: ${COMPRESSION_ALGHORITM.toString().toLowerCase()}")

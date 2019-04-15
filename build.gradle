@@ -13,6 +13,9 @@ repositories {
     maven {
         url = 'https://oss.sonatype.org/content/repositories/snapshots'
     }
+    maven {
+        url = 'http://maven.sk89q.com/repo/'
+    }
 }
 
 jar {
@@ -36,6 +39,10 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
     compile 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
+
+    // For schematic extraction
+    compile 'com.sk89q.worldedit:worldedit-bukkit:6.1.1-SNAPSHOT'
+    compile 'com.sk89q.worldguard:worldguard-core:6.1.1-SNAPSHOT'
 }
 
 compileKotlin {

@@ -15,20 +15,6 @@ object FileFetcher {
         return map
     }
 
-    fun fetchWorldGuardFiles(worldName: String): Map<String, File>? {
-        val folder = "./plugins/WorldGuard/worlds/$worldName"
-
-        val map = mutableMapOf<String, File>()
-        listFiles(folder, "", "wgdata/", map)
-
-        val modifiedMap = mutableMapOf<String, File>()
-        for ((key, value) in map) {
-            modifiedMap[key.replace(".plugins\\WorldGuard\\worlds\\$worldName\\", "")] = value
-        }
-
-        return modifiedMap
-    }
-
     private fun listFiles(directoryName: String, deepFolder: String, prefix: String, files: MutableMap<String, File>) {
         val directory = File("$directoryName/$deepFolder")
         val fileList = directory.listFiles()

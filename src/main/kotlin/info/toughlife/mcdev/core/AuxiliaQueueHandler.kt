@@ -4,8 +4,9 @@ import java.util.*
 
 class AuxiliaQueueHandler {
 
-    private val queue = LinkedList<AuxiliaQueue>()
+    val queue = LinkedList<AuxiliaQueue>()
 
+    var current: AuxiliaQueue? = null
     var allowNext = true
 
     /**
@@ -19,6 +20,8 @@ class AuxiliaQueueHandler {
 
         allowNext = false
 
+        current = queue
+
         queue.start()
     }
 
@@ -26,6 +29,8 @@ class AuxiliaQueueHandler {
         for (queue in queue) {
             queue.interrupt()
         }
+        current = null
+
         queue.clear()
     }
 

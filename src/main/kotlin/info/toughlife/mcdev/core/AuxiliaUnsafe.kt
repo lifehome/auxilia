@@ -1,10 +1,10 @@
 package info.toughlife.mcdev.core
 
 import info.toughlife.mcdev.Auxilia
+import info.toughlife.mcdev.core.io.DriveManager
 import info.toughlife.mcdev.core.io.FileCompressionManager
 import info.toughlife.mcdev.core.io.FileFetcher
 import info.toughlife.mcdev.core.io.FileNameCreator
-import info.toughlife.mcdev.core.io.FileUploader
 import org.bukkit.World
 import java.io.File
 
@@ -20,21 +20,26 @@ internal object AuxiliaUnsafe {
         File(TEMP_PATH).mkdir()
     }
 
-    fun backupUnsafe(world: World, player: String) {
-        val outputName = TEMP_PATH +
-                FileNameCreator.createBackupName(world.name, player)
+    fun backupUnsafe(queue: AuxiliaQueue, world: World, player: String) {
+        val fileName = FileNameCreator.createBackupName(world.name, player)
+        val outputName = TEMP_PATH + fileName
+        queue.fileName = fileName
 
+        queue.currentAction = AuxiliaQueueAction.FETCH
         val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
-        val wgFiles = FileFetcher.fetchWorldGuardFiles(world.name) ?: return
+        val schematics = AuxiliaSchematicExtractor.extractSchematics(world.name) ?: return
 
         val result = worldFiles.toMutableMap()
-        result.putAll(wgFiles)
+        result.putAll(schematics)
 
+        queue.currentAction = AuxiliaQueueAction.COMPRESS
         FileCompressionManager.compress(outputName, result)
         val file = java.io.File(outputName)
 
-        FileUploader.upload(file)
+        queue.currentAction = AuxiliaQueueAction.UPLOAD
+        DriveManager.upload(file)
 
+        queue.currentAction = AuxiliaQueueAction.CLEANUP
         file.delete()
     }
 

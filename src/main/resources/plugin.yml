@@ -1,4 +1,7 @@
 name: Auxilia
 version: 1.0
 main: info.toughlife.mcdev.Auxilia
+depend: [WorldEdit, WorldGuard]
 author: SocketByte
+commands:
+  auxilia:

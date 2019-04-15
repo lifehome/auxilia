@@ -5,7 +5,7 @@ import info.toughlife.mcdev.Auxilia
 import info.toughlife.mcdev.core.io.config.configInfo
 import java.text.SimpleDateFormat
 
-internal object FileUploader {
+internal object DriveManager {
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
@@ -45,6 +45,24 @@ internal object FileUploader {
             }
             return createFolder()
         }
+    }
+
+    fun listFiles(): List<String> {
+        val list = mutableListOf<String>()
+        val result = Auxilia.drive.files().list()
+            .setSupportsTeamDrives(true)
+            .setQ("trashed = false and not mimeType = 'application/vnd.google-apps.folder'")
+            .setCorpora("teamDrive")
+            .setTeamDriveId(teamDriveId)
+            .setIncludeTeamDriveItems(true)
+            .setPageSize(10)
+            .setFields("nextPageToken, files(id, name)")
+            .execute()
+        val files = result.files
+        for (file in files) {
+            list.add(file.name)
+        }
+        return list
     }
 
     fun upload(filePath: java.io.File) {
