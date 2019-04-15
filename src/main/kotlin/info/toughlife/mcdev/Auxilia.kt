@@ -33,7 +33,6 @@ class Auxilia : JavaPlugin() {
             (configInfo().settings.cooldownMinutes * 60) * 20L)
 
         drive = GoogleDriveAPI.createService()
-
         // test
         AuxiliaManager.backup(Bukkit.getWorld("world")!!, "1")
     }
