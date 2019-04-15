@@ -6,6 +6,7 @@ import info.toughlife.mcdev.core.io.FileFetcher
 import info.toughlife.mcdev.core.io.FileNameCreator
 import info.toughlife.mcdev.core.io.FileUploader
 import org.bukkit.World
+import java.io.File
 
 /**
  * A class that holds all functions that can be used ONLY in certain circumstances
@@ -13,16 +14,28 @@ import org.bukkit.World
  */
 internal object AuxiliaUnsafe {
 
+    val TEMP_PATH = Auxilia.instance.dataFolder.absolutePath + "/_temp/"
+
+    init {
+        File(TEMP_PATH).mkdir()
+    }
+
     fun backupUnsafe(world: World, player: String) {
-        val outputName = Auxilia.instance.dataFolder.absolutePath + "/" +
+        val outputName = TEMP_PATH +
                 FileNameCreator.createBackupName(world.name, player)
 
         val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
+        val wgFiles = FileFetcher.fetchWorldGuardFiles(world.name) ?: return
 
-        FileCompressionManager.compress(outputName, worldFiles)
+        val result = worldFiles.toMutableMap()
+        result.putAll(wgFiles)
+
+        FileCompressionManager.compress(outputName, result)
         val file = java.io.File(outputName)
 
         FileUploader.upload(file)
+
+        file.delete()
     }
 
 }

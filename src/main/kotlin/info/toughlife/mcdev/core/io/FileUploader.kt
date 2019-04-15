@@ -27,6 +27,7 @@ internal object FileUploader {
     private fun getParentId(): String {
         val result = Auxilia.drive.files().list()
             .setSupportsTeamDrives(true)
+            .setQ("trashed = false")
             .setCorpora("teamDrive")
             .setTeamDriveId(teamDriveId)
             .setIncludeTeamDriveItems(true)
