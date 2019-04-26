@@ -22,7 +22,7 @@ object FileCompressionManager {
     init {
         Auxilia.instance.logger.info("Selected compression alghoritm: ${COMPRESSION_ALGHORITM.toString().toLowerCase()}")
         Auxilia.instance.logger.info("Selected compression method: ${COMPRESSION_METHOD.toLowerCase()}")
-        if (COMPRESSION_ALGHORITM == CompressionAlghoritm.NONE) {
+        if (COMPRESSION_ALGHORITM == CompressionAlghoritm.NONE || !configInfo().settings.compressArchive) {
             if (COMPRESSION_METHOD == "7z") {
                 Auxilia.instance.logger.severe("No compression method is set for 7z compression alghoritm. Defaulting to LZMA2.")
                 COMPRESSION_ALGHORITM = CompressionAlghoritm.LZMA2

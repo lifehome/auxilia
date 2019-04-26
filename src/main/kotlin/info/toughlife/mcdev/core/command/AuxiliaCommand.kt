@@ -7,8 +7,8 @@ import info.toughlife.mcdev.commons.sendColoredMessage
 import info.toughlife.mcdev.core.AuxiliaManager
 import info.toughlife.mcdev.core.ConfirmationAction
 import info.toughlife.mcdev.core.ConfirmationHandler
-import info.toughlife.mcdev.core.io.DriveManager
 import info.toughlife.mcdev.core.io.FileCompressionManager
+import info.toughlife.mcdev.core.io.config.configInfo
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -33,6 +33,10 @@ object AuxiliaCommand : CommandExecutor {
 
         when (args[0]) {
             "backup" -> {
+                if (AuxiliaManager.queueHandler.size() > configInfo().settings.maxQueuedJobs) {
+                    sender.sendColoredMessage("&cInsufficient permissions.")
+                    return true
+                }
                 var allWorlds = false
                 var noConfirm = false
                 if (args.size > 1) {
@@ -135,15 +139,20 @@ object AuxiliaCommand : CommandExecutor {
                     return true
                 }
                 Bukkit.getScheduler().runTaskAsynchronously(Auxilia.instance, Runnable {
+                    val list = Auxilia.driveOptions.listFiles()
+
                     var startIndex = 0
+                    var pageNumber = 1
                     val pageSize = 10
+                    val pages = if ((list.size / pageSize) == 0) 1 else list.size / pageSize
+
                     if (args.size == 2) {
-                        startIndex = (args[1].toInt()-1) * pageSize
+                        pageNumber = args[1].toInt()
+                        startIndex = (pageNumber-1) * pageSize
                     }
 
-                    val list = DriveManager.listFiles()
                     if (startIndex >= list.size) {
-                        sender.sendColoredMessage("&cInvalid page (" + args[1] + ")")
+                        sender.sendColoredMessage("&cInvalid page ($pageNumber)")
                         return@Runnable
                     }
                     val sub = list.subList(startIndex, Math.min(list.size, startIndex + pageSize))
@@ -153,9 +162,9 @@ object AuxiliaCommand : CommandExecutor {
                         return@Runnable
                     }
 
-                    sender.sendColoredMessage("&9&l<==================[&f${args[1]}&9/&f$pageSize&9]==================>")
+                    sender.sendColoredMessage("&9&l<==================[ &f$pageNumber&9 / &f$pages&9 ]==================>")
                     for ((i, backup) in sub.withIndex()) {
-                        sender.sendColoredMessage("&f${i+1}&9. &f$backup")
+                        sender.sendColoredMessage("&f${i+1}&9) &f$backup")
                     }
                 })
             }

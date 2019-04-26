@@ -1,10 +1,10 @@
 package info.toughlife.mcdev.core
 
 import info.toughlife.mcdev.Auxilia
-import info.toughlife.mcdev.core.io.DriveManager
 import info.toughlife.mcdev.core.io.FileCompressionManager
 import info.toughlife.mcdev.core.io.FileFetcher
 import info.toughlife.mcdev.core.io.FileNameCreator
+import info.toughlife.mcdev.core.io.config.configInfo
 import org.bukkit.World
 import java.io.File
 
@@ -25,6 +25,8 @@ internal object AuxiliaUnsafe {
         val outputName = TEMP_PATH + fileName
         queue.fileName = fileName
 
+        world.save()
+
         queue.currentAction = AuxiliaQueueAction.FETCH
         val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
         val schematics = AuxiliaSchematicExtractor.extractSchematics(world.name) ?: return
@@ -37,13 +39,15 @@ internal object AuxiliaUnsafe {
         val file = java.io.File(outputName)
 
         queue.currentAction = AuxiliaQueueAction.UPLOAD
-        DriveManager.upload(file)
+        Auxilia.driveOptions.upload(file)
 
         queue.currentAction = AuxiliaQueueAction.CLEANUP
-        for ((_, schema) in schematics) {
-            schema.delete()
+        if (configInfo().settings.deleteAfterUpload) {
+            for ((_, schema) in schematics) {
+                schema.delete()
+            }
+            file.delete()
         }
-        file.delete()
     }
 
 }

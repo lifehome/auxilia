@@ -3,10 +3,12 @@ package info.toughlife.mcdev
 import com.google.api.services.drive.Drive
 import com.sk89q.worldedit.bukkit.WorldEditPlugin
 import info.toughlife.mcdev.core.command.AuxiliaCommand
-import info.toughlife.mcdev.core.io.DriveManager
 import info.toughlife.mcdev.core.io.config.ConfigFileHandler
 import info.toughlife.mcdev.core.io.config.ConfigReader
 import info.toughlife.mcdev.core.io.config.configInfo
+import info.toughlife.mcdev.core.io.drive.DriveOptions
+import info.toughlife.mcdev.core.io.drive.DrivePersonalOptions
+import info.toughlife.mcdev.core.io.drive.DriveTeamOptions
 import info.toughlife.mcdev.core.scheduler.AutoBackupTask
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
@@ -16,6 +18,8 @@ class Auxilia : JavaPlugin() {
         lateinit var instance: Auxilia
             private set
         lateinit var drive: Drive
+            private set
+        lateinit var driveOptions: DriveOptions
             private set
         lateinit var worldEdit: WorldEditPlugin
             private set
@@ -32,6 +36,15 @@ class Auxilia : JavaPlugin() {
 
         println(configInfo())
 
+        if (configInfo().teamDriveId == "") {
+            driveOptions = DrivePersonalOptions()
+            drive = driveOptions.connect()
+        }
+        else {
+            driveOptions = DriveTeamOptions()
+            drive = driveOptions.connect()
+        }
+
         worldEdit = Bukkit.getServer().pluginManager.getPlugin("WorldEdit") as WorldEditPlugin
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, AutoBackupTask,
@@ -40,9 +53,7 @@ class Auxilia : JavaPlugin() {
 
         getCommand("auxilia")!!.setExecutor(AuxiliaCommand)
 
-        drive = GoogleDriveAPI.createService()
-
-        println(DriveManager.listFiles())
+        println(Auxilia.driveOptions.listFiles())
         // test
         //AuxiliaManager.backup(Bukkit.getWorld("world")!!, "1")
     }
