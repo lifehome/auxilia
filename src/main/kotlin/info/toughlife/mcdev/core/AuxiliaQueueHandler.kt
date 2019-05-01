@@ -26,8 +26,8 @@ class AuxiliaQueueHandler {
     }
 
     fun cancelAll() {
-        for (queue in queue) {
-            queue.interrupt()
+        if (current != null && current!!.isAlive) {
+            current!!.interrupt()
         }
         current = null
 

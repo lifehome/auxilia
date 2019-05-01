@@ -1,0 +1,44 @@
+other:
+  noPermission: '&cInsufficient permissions.'
+  mustBePlayer: "&cYou need to be a player to do this!"
+commands:
+  help:
+    - "&9&l<====================================>"
+    - "&f* &9/auxilia &3backup &f[now] [--allworlds | --noconfirm]"
+    - "&f* &9/auxilia &3status"
+    - "&f* &9/auxilia &3pendings"
+    - "&f* &9/auxilia &3cancel &f[--all]"
+    - "&f* &9/auxilia &3list"
+  backup:
+    maxQueues: "&cThere are currently {LIMIT} jobs in the queue which is the max amount."
+    pleaseConfirm: "&aPlease confirm backuping all worlds using &l/auxilia confirm &a(60 seconds left)"
+    allWorldsSuccess: "&aBackup requests were added to the queue."
+    worldSuccess: "&aBackup request was added to the queue."
+    pendingInfo: "&aAwaiting, {PENDING} backup(s) in progress left."
+  confirm:
+    nothingToConfirm: "&cNothing to confirm."
+  status:
+    noBackups: "&cNo backup currently in progress."
+    info:
+      - "&9&l<====================================>"
+      - "&9Information about &7{NAME} &9(id: &7{ID}&9)"
+      - "&f* &9Time elapsed: &f{ELAPSED}"
+      - "&f* &9Status: ${STATUS} &9(&f{STATUS_INDEX}&9/&f5&9)"
+      - "&f* &9World: &f{WORLD}"
+      - "&f* &9Performer: &f${PLAYER}"
+      - "&f* &9Compression method: &f{COMPRESSION_METHOD}&9, alghoritm: &f{COMPRESSION_ALGHORITM}"
+      - "&f* &9File name: &f${FILE}"
+  pendings:
+    noBackups: "&cNo pending backups."
+    header: "&9&l<====================================>"
+    indexStyle: " &f{INDEX}&9. &fBackup of &9{WORLD} &f(&9{PLAYER}&f)"
+  cancel:
+    noTasks: "&cNo tasks in progress."
+    success: "&aSuccessfully cancelled current task."
+    successAll: "&aSuccessfully cancelled everything."
+  list:
+    invalidPage: "&cInvalid page ({PAGE})"
+    noBackups: "&cNo recent backups."
+    header: "&9&l<==================[ &f{PAGE}&9 / &f{PAGES}&9 ]==================>"
+    indexStyle: "&f{INDEX}&9) &f{BACKUP}"
+

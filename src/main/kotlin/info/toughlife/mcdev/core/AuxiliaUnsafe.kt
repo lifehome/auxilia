@@ -50,4 +50,29 @@ internal object AuxiliaUnsafe {
         }
     }
 
+    fun backupUnsafeUrgent(world: World, player: String) {
+        val fileName = FileNameCreator.createBackupName(world.name, player)
+        val outputName = TEMP_PATH + fileName
+
+        world.save()
+
+        val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
+        val schematics = AuxiliaSchematicExtractor.extractSchematics(world.name) ?: return
+
+        val result = worldFiles.toMutableMap()
+        result.putAll(schematics)
+
+        FileCompressionManager.compress(outputName, result)
+        val file = java.io.File(outputName)
+
+        Auxilia.driveOptions.upload(file)
+
+        if (configInfo().settings.deleteAfterUpload) {
+            for ((_, schema) in schematics) {
+                schema.delete()
+            }
+            file.delete()
+        }
+    }
+
 }

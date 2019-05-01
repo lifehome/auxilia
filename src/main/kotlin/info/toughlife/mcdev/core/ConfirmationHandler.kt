@@ -21,6 +21,10 @@ object ConfirmationHandler {
             confirmationAwaiting[uniqueId]?.run()
         }
     }
+
+    fun isConfirmationValid(uniqueId: UUID): Boolean {
+        return confirmationAwaiting.containsKey(uniqueId)
+    }
 }
 
 interface ConfirmationAction {

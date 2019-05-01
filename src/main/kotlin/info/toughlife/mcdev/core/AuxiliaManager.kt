@@ -9,18 +9,25 @@ object AuxiliaManager {
 
     internal val queueHandler = AuxiliaQueueHandler()
 
-    fun backup(world: World, player: String) {
+    fun backup(world: World, player: String, now: Boolean) {
+        if (now) {
+            AuxiliaUnsafe.backupUnsafeUrgent(world, player)
+        }
         if (player == CONSOLE_MODIFIER) {
             AuxiliaQueue(world, CONSOLE_REPLACEMENT).finalizePriority()
             return
         }
-
         AuxiliaQueue(world, player).finalize()
     }
 
-    fun backupAll(player: String) {
+    fun backupAll(player: String, now: Boolean) {
         for (world in Bukkit.getWorlds()) {
-            backup(world, player)
+            if (now) {
+                AuxiliaUnsafe.backupUnsafeUrgent(world, player)
+                continue
+            }
+            backup(world, player, false)
         }
     }
+
 }
