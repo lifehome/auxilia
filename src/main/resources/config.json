@@ -2,6 +2,7 @@
   "version":1,
   "teamDriveId":"",
   "settings":{
+    "language":"en",
     "maxQueuedJobs":3,
     "compressArchive":true,
     "deleteAfterUpload":false,

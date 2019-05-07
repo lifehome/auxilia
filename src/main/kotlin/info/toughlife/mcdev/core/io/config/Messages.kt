@@ -10,14 +10,14 @@ import java.io.File
 
 object Messages {
 
-    private val FILE = File(Auxilia.instance.dataFolder.absolutePath + "/messages.yml")
+    private val FILE = File(Auxilia.instance.dataFolder.absolutePath + "/messages_en.yml")
 
     fun saveDefault() {
         if (!FILE.exists())
             FILE.createNewFile()
 
         FILE.writeText(this::class.java.classLoader
-            .getResource("messages.yml").readText())
+            .getResource("messages_${configInfo().settings.language}.yml").readText())
     }
 
     fun getConfig(): FileConfiguration {

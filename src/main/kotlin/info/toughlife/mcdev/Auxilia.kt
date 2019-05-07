@@ -38,6 +38,8 @@ class Auxilia : JavaPlugin() {
         ConfigFileHandler.createFile()
         ConfigReader.readConfig()
 
+        val metrics = Metrics(this)
+
         Messages.saveDefault()
         messages = Messages.getConfig()
 
