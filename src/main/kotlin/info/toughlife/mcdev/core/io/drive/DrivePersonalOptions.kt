@@ -12,10 +12,7 @@ import com.google.api.client.util.store.FileDataStoreFactory
 import com.google.api.services.drive.Drive
 import info.toughlife.mcdev.Auxilia
 import info.toughlife.mcdev.core.io.FileCompressionManager
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.io.InputStreamReader
+import java.io.*
 import java.text.SimpleDateFormat
 
 class DrivePersonalOptions : DriveOptions {
@@ -25,9 +22,9 @@ class DrivePersonalOptions : DriveOptions {
 
     @Throws(IOException::class)
     private fun getCredentials(HTTP_TRANSPORT: NetHttpTransport): Credential {
-        val input = DrivePersonalOptions::class.java.getResourceAsStream(CREDENTIALS_FILE_PATH)
-            ?: throw FileNotFoundException("Resource not found: $CREDENTIALS_FILE_PATH")
-        val clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, InputStreamReader(input))
+        val file = File(CREDENTIALS_FILE_PATH)
+        val input = InputStreamReader(FileInputStream(file))
+        val clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, input)
         val flow = (GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
             .setDataStoreFactory(FileDataStoreFactory(java.io.File(TOKENS_DIRECTORY_PATH)))
             .setAccessType("offline"))

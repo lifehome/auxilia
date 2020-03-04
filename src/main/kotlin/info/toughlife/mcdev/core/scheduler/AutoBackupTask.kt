@@ -6,12 +6,6 @@ import org.bukkit.Bukkit
 
 object AutoBackupTask : Runnable {
     override fun run() {
-        for (world in Bukkit.getWorlds()) {
-            world.save()
-        }
         AuxiliaManager.backupAll(CONSOLE_MODIFIER, false)
-        for (player in Bukkit.getOnlinePlayers()) {
-
-        }
     }
 }
