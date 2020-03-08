@@ -10,7 +10,6 @@ import info.toughlife.mcdev.core.io.config.configInfo
 import info.toughlife.mcdev.core.io.drive.DriveOptions
 import info.toughlife.mcdev.core.io.drive.DrivePersonalOptions
 import info.toughlife.mcdev.core.io.drive.DriveTeamOptions
-import info.toughlife.mcdev.core.scheduler.AutoBackupTask
 import org.bukkit.Bukkit
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.plugin.java.JavaPlugin
@@ -53,10 +52,6 @@ class Auxilia : JavaPlugin() {
         }
 
         worldEdit = Bukkit.getServer().pluginManager.getPlugin("WorldEdit") as WorldEditPlugin
-
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, AutoBackupTask,
-            (configInfo().settings.cooldownMinutes * 60) * 20L,
-            (configInfo().settings.cooldownMinutes * 60) * 20L)
 
         getCommand("auxilia")!!.setExecutor(AuxiliaCommand)
     }
