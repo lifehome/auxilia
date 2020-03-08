@@ -8,7 +8,7 @@ import info.toughlife.mcdev.core.io.config.ConfigReader
 import info.toughlife.mcdev.core.io.config.Messages
 import info.toughlife.mcdev.core.io.config.configInfo
 import info.toughlife.mcdev.core.io.drive.DriveOptions
-import info.toughlife.mcdev.core.io.drive.DrivePersonalOptions
+// import info.toughlife.mcdev.core.io.drive.DrivePersonalOptions
 import info.toughlife.mcdev.core.io.drive.DriveTeamOptions
 import org.bukkit.Bukkit
 import org.bukkit.configuration.file.FileConfiguration
@@ -32,6 +32,7 @@ class Auxilia : JavaPlugin() {
         instance = this
     }
 
+    @Throws(IllegalStateException::class)
     override fun onEnable() {
         logger.info("Loading resources...")
         ConfigFileHandler.createFile()
@@ -42,9 +43,13 @@ class Auxilia : JavaPlugin() {
         Messages.saveDefault()
         messages = Messages.getConfig()
 
+// HOTFIX: Buggy personal drive implementation
+//         Disabled due to no path designator.
+//---------------------------------------------------
         if (configInfo().teamDriveId == "") {
-            driveOptions = DrivePersonalOptions()
-            drive = driveOptions.connect()
+            throw IllegalStateException("OMG There is no Shared Drive ID specified.")
+//            driveOptions = DrivePersonalOptions()
+//            drive = driveOptions.connect()
         }
         else {
             driveOptions = DriveTeamOptions()
