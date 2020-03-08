@@ -25,8 +25,6 @@ internal object AuxiliaUnsafe {
         val outputName = TEMP_PATH + fileName
         queue.fileName = fileName
 
-        world.save()
-
         queue.currentAction = AuxiliaQueueAction.FETCH
         val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
         val schematics = AuxiliaSchematicExtractor.extractSchematics(world.name) ?: return
@@ -53,8 +51,6 @@ internal object AuxiliaUnsafe {
     fun backupUnsafeUrgent(world: World, player: String) {
         val fileName = FileNameCreator.createBackupName(world.name, player)
         val outputName = TEMP_PATH + fileName
-
-        world.save()
 
         val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
         val schematics = AuxiliaSchematicExtractor.extractSchematics(world.name) ?: return
