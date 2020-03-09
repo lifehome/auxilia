@@ -27,10 +27,10 @@ internal object AuxiliaUnsafe {
 
         queue.currentAction = AuxiliaQueueAction.FETCH
         val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
-        val schematics = AuxiliaSchematicExtractor.extractSchematics(world.name) ?: return
+//        val schematics = AuxiliaSchematicExtractor.extractSchematics(world.name) ?: return
 
         val result = worldFiles.toMutableMap()
-        result.putAll(schematics)
+//        result.putAll(schematics)
 
         queue.currentAction = AuxiliaQueueAction.COMPRESS
         FileCompressionManager.compress(outputName, result)
@@ -41,9 +41,9 @@ internal object AuxiliaUnsafe {
 
         queue.currentAction = AuxiliaQueueAction.CLEANUP
         if (configInfo().settings.deleteAfterUpload) {
-            for ((_, schema) in schematics) {
-                schema.delete()
-            }
+//            for ((_, schema) in schematics) {
+//                schema.delete()
+//            }
             file.delete()
         }
     }
@@ -53,10 +53,10 @@ internal object AuxiliaUnsafe {
         val outputName = TEMP_PATH + fileName
 
         val worldFiles = FileFetcher.fetchWorldFiles(world.name) ?: return
-        val schematics = AuxiliaSchematicExtractor.extractSchematics(world.name) ?: return
+//        val schematics = AuxiliaSchematicExtractor.extractSchematics(world.name) ?: return
 
         val result = worldFiles.toMutableMap()
-        result.putAll(schematics)
+//        result.putAll(schematics)
 
         FileCompressionManager.compress(outputName, result)
         val file = java.io.File(outputName)
@@ -64,9 +64,9 @@ internal object AuxiliaUnsafe {
         Auxilia.driveOptions.upload(file)
 
         if (configInfo().settings.deleteAfterUpload) {
-            for ((_, schema) in schematics) {
-                schema.delete()
-            }
+//            for ((_, schema) in schematics) {
+//                schema.delete()
+//            }
             file.delete()
         }
     }
