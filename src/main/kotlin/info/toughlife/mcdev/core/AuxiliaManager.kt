@@ -11,7 +11,7 @@ object AuxiliaManager {
 
     fun backup(world: World, player: String, now: Boolean) {
         if (now) {
-            AuxiliaUnsafe.backupUnsafeUrgent(world, player)
+//            AuxiliaUnsafe.backupUnsafeUrgent(world, player)
         }
         if (player == CONSOLE_MODIFIER) {
             AuxiliaQueue(world, CONSOLE_REPLACEMENT).finalizePriority()
@@ -23,7 +23,7 @@ object AuxiliaManager {
     fun backupAll(player: String, now: Boolean) {
         for (world in Bukkit.getWorlds()) {
             if (now) {
-                AuxiliaUnsafe.backupUnsafeUrgent(world, player)
+//                AuxiliaUnsafe.backupUnsafeUrgent(world, player)
                 continue
             }
             backup(world, player, false)
