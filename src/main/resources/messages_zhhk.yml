@@ -1,0 +1,43 @@
+other:
+  noPermission: '&c你未有足夠的力量去執行這個魔法式。'
+  mustBePlayer: "&c你必須在遊戲裡面執行這個魔法式。"
+commands:
+  help:
+    - "&9&l<====================================>"
+    - "&f* 開始備份： &9/auxilia &3backup &f[now] [--allworlds | --noconfirm]"
+    - "&f* 目前備份進度： &9/auxilia &3status"
+    - "&f* 待進行的備份： &9/auxilia &3pendings"
+    - "&f* 取消備份： &9/auxilia &3cancel &f[--all]"
+    - "&f* 已備份存檔清單： &9/auxilia &3list"
+  backup:
+    maxQueues: "&c目前最多能容納 {LIMIT} 個非同步備份工作，請稍等完成後再嘗試。"
+    pleaseConfirm: "&a請使用指令【&l/auxilia confirm&a】來確定備份指令。 (尚餘 60 秒確認時間)"
+    allWorldsSuccess: "&a備份工作已經成功加到序列。"
+    worldSuccess: "&a備份工作已經成功加到序列。"
+    pendingInfo: "&正在等待，尚餘 {PENDING} 個非同步備份工作。"
+  confirm:
+    nothingToConfirm: "&c沒有東西需要確認。"
+  status:
+    noBackups: "&c目前未有備份工作進行中。"
+    info:
+      - "&9&l<====================================>"
+      - "&9有關於 &7{NAME} 的備份工作 &9(執行緒： &7{ID}&9)"
+      - "&f* &9已使用時間: &f{ELAPSED}"
+      - "&f* &9目前備份狀態: {STATUS} &9(&f{STATUS_INDEX}&9/&f5&9)"
+      - "&f* &9地圖檔名稱: &f{WORLD}"
+      - "&f* &9由 &f{PLAYER} 發起的備份工作"
+      - "&f* &9壓縮方法: &f{COMPRESSION_METHOD}&9, alghoritm: &f{COMPRESSION_ALGHORITM}"
+      - "&f* &9備份檔名稱: &f{FILE}"
+  pendings:
+    noBackups: "&c目前未有備份工作排程中。"
+    header: "&9&l<====================================>"
+    indexStyle: " &f{INDEX}&9. &9{WORLD} | 由 &9{PLAYER} 發起"
+  cancel:
+    noTasks: "&c目前未有備份工作進行中。"
+    success: "&a你已經成功取消了目前的備份工作。"
+    successAll: "&a你已經成功取消了所有的備份工作。"
+  list:
+    invalidPage: "&c無效頁數： 第 {PAGE} 頁。"
+    noBackups: "&c查無備份存檔記錄。"
+    header: "&9&l<==================[ &f{PAGE}&9 / &f{PAGES}&9 ]==================>"
+    indexStyle: "&f{INDEX}&9) &f{BACKUP}"
